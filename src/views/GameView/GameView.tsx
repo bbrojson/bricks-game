@@ -1,16 +1,11 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Paper, Grid } from '@material-ui/core';
+import { Container, Grid, Box } from '@material-ui/core';
 import BoardGame from '../../components/BoardGame/BoardGame';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
 }));
 
@@ -19,11 +14,15 @@ export default function GameView() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}><BoardGame /></Paper>
+      <Container maxWidth="md">
+        <Grid container spacing={0}>
+          <Grid item xs={12}>
+            <Box p={3} pr={0} pl={0}>
+              <BoardGame />
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </div>
   );
 }
