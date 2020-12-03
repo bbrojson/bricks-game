@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Paper, Grid, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 
 type StylesProps = {
   grid: number,
@@ -15,24 +15,42 @@ const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => createStyles(
     margin: '0 auto',
   },
   grid: {
-    margin: 0,
+    margin: '-1px -1px 0 0',
     padding: 0,
-    width: props => `${100 / props.grid}%`,
-    height: props => `${100 / props.grid}%`,
+    width: props => `calc(${100 / props.grid}% + 1px)`,
+    height: props => `calc(${100 / props.grid}% + 1px)`,
     textAlign: 'center',
   },
   button: {
     width: '100%',
     height: '100%',
+    textIndent: '-1000px',
     margin: 0,
     padding: 0,
     minWidth: 0,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    boxShadow: '5px',
-    backgroundColor: 'rgb(245, 171, 53)',
-    transform: 'matrix(1, 0, 0, 1, 0, 0)',
+  },
+  /* brick colors */
+  brickEmpty: {
+    backgroundColor: '#321001',
+    border: '1px solid #000',
+  },
+  brickFull: {
+    backgroundColor: '#efe3dc',
+    borderColor: '#e2dc86',
+    borderRadius: '2px',
+    borderWidth: '2px',
     borderStyle: 'outset',
+    transform: 'matrix(1, 0, 0, 1, 0, 0)',
+  },
+  brickInLine: {
+    backgroundColor: '#fffcfa',
+    borderColor: '#fffcfa',
+    borderRadius: '2px',
+    borderWidth: '2px',
+    borderStyle: 'outset',
+    transform: 'matrix(1, 0, 0, 1, 0, 0)',
   },
 }));
 
@@ -52,11 +70,11 @@ export default function BoardGame() {
         <Grid
           key={el.id}
           item
-          className={classes.grid}
+          className={clsx(classes.grid, classes.brickEmpty)}
         >
           <Button
             onClick={() => handleButtonOnClick(el.id)}
-            className={classes.button}
+            className={clsx(classes.button, el.id % 3 || classes.brickFull)}
           >
             {el.id + 1}
           </Button>
