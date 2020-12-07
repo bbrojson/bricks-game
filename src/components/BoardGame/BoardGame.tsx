@@ -1,82 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
-
-type StylesProps = {
-  grid: number,
-};
-
-const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => createStyles({
-  root: {
-    flexGrow: 1,
-    width: 'calc(100vw - 24px * 2)',
-    height: 'calc(100vw - 24px * 2)',
-    margin: '0 auto',
-  },
-  grid: {
-    margin: '-1px -1px 0 0',
-    padding: 0,
-    width: props => `calc(${100 / props.grid}% + 1px)`,
-    height: props => `calc(${100 / props.grid}% + 1px)`,
-    textAlign: 'center',
-  },
-  button: {
-    width: '100%',
-    height: '100%',
-    textIndent: '-1000px',
-    margin: 0,
-    padding: 0,
-    minWidth: 0,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  /* brick colors */
-  brickEmpty: {
-    backgroundColor: '#321001',
-    border: '1px solid #000',
-  },
-  brickFull: {
-    backgroundColor: '#efe3dc',
-    borderColor: '#e2dc86',
-    borderRadius: '2px',
-    borderWidth: '2px',
-    borderStyle: 'outset',
-    transform: 'matrix(1, 0, 0, 1, 0, 0)',
-  },
-  brickInLine: {
-    backgroundColor: '#fffcfa',
-    borderColor: '#fffcfa',
-    borderRadius: '2px',
-    borderWidth: '2px',
-    borderStyle: 'outset',
-    transform: 'matrix(1, 0, 0, 1, 0, 0)',
-  },
-}));
+import { resetBriks, getBricks } from '../../store/bricksSlice';
+import { useStyles } from './styles';
 
 const GRID_LENGTH = 9;
 const array = new Array(GRID_LENGTH * GRID_LENGTH).fill(0).map((el, i) => ({ id: i }));
 
 export default function BoardGame() {
-  const classes = useStyles({ grid: GRID_LENGTH } as StylesProps);
+  const classes = useStyles({ grid: GRID_LENGTH });
+  const dispatch = useDispatch();
+
+  // reset game on reload
+  useEffect(() => {
+    dispatch(resetBriks());
+    dispatch(getBricks());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleButtonOnClick(index: number) {
     console.log(index);
   }
 
+  function greedStyle(i: number) {
+    const x = i % GRID_LENGTH;
+    const y = Math.floor(i / GRID_LENGTH);
+    if (
+      (Math.floor(x / 3) % 2 && !(Math.floor(y / 3) % 2))
+      || (!(Math.floor(x / 3) % 2) && Math.floor(y / 3) % 2)
+    ) {
+      return classes.brickEmpty;
+    }
+    return classes.brickEmptyLighter;
+  }
+
   return (
     <Grid container className={classes.root}>
-      {array.map((el) => (
+      {array.map((el, i) => (
         <Grid
           key={el.id}
           item
-          className={clsx(classes.grid, classes.brickEmpty)}
+          className={clsx(classes.grid, greedStyle(i))}
         >
           <Button
             onClick={() => handleButtonOnClick(el.id)}
-            className={clsx(classes.button, el.id % 3 || classes.brickFull)}
+            className={clsx(classes.button)}
           >
-            {el.id + 1}
+            {null}
           </Button>
         </Grid>
       ))}
