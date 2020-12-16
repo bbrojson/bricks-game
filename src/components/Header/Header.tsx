@@ -1,50 +1,53 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
+  AppBar,
+  Toolbar,
+  Typography,
   Button,
-  Divider,
-  Container,
-  Grid,
+  IconButton,
 } from '@material-ui/core';
+import { Menu as MenuIcon } from '@material-ui/icons';
 import {
   Link as RouterLink,
 } from 'react-router-dom';
-import logo from '../../logo.svg';
 
-const useStyles = makeStyles(() => ({
-  starJediFont: {
-    fontFamily: 'Star Jedi',
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    flexGrow: 1,
   },
-  logoLink: {
-    display: 'block',
-    color: '#fff',
-    textAlign: 'center',
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
-  img: {
-    maxWidth: '100%',
-    display: 'block',
-    margin: '0 auto',
+  title: {
+    flexGrow: 1,
   },
 }));
 
 export default function Header() {
   const { t } = useTranslation();
   const classes = useStyles();
+
   return (
-    <header>
-      <Container maxWidth="md">
-        <Grid container>
-          <Grid item xs={12}>
-            <Button className={classes.logoLink} color="primary" component={RouterLink} to="/subsite">
-              <img className={classes.img} src={logo} alt={t('LOGO')} />
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider light />
-          </Grid>
-        </Grid>
-      </Container>
-    </header>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {t('App name')}
+          </Typography>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/"
+          >
+            {t('Login')}
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }

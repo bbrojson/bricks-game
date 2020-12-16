@@ -4,17 +4,13 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import darkTheme from './theme/darkTheme';
+import HelloView from './views/HelloView/HelloView';
+import GameView from './views/GameView/GameView';
 import Header from './components/Header/Header';
 import './App.css';
-
-function SubSite() {
-  const { t } = useTranslation();
-  return <div className="App">{t('sub site')}</div>;
-}
 
 export default function App() {
   return (
@@ -23,9 +19,8 @@ export default function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/subsite" element={<SubSite />} />
-          <Route path="/subsite/:id" element={null} />
-          <Route path="/" element={null} />
+          <Route path="/game" element={<GameView />} />
+          <Route path="/" element={<HelloView />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
