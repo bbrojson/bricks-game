@@ -1,31 +1,41 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { Grid, Button } from '@material-ui/core';
-import { resetBriks, getBricks } from '../../store/bricksSlice';
+import {
+  resetBriks,
+  createBricks,
+  insertBrickOnBoard,
+  bricksSelector,
+} from '../../store/bricksSlice';
 import { useStyles } from './styles';
+import { BrickStyles } from '../../types';
 
-const GRID_LENGTH = 9;
-const array = new Array(GRID_LENGTH * GRID_LENGTH).fill(0).map((el, i) => ({ id: i }));
+interface Props {
+  gridLength: number,
+}
 
-export default function BoardGame() {
-  const classes = useStyles({ grid: GRID_LENGTH });
+export default function BoardGame({
+  gridLength,
+}: Props) {
+  const classes = useStyles({ grid: gridLength });
   const dispatch = useDispatch();
+  const { bricks } = useSelector(bricksSelector);
 
   // reset game on reload
   useEffect(() => {
     dispatch(resetBriks());
-    dispatch(getBricks());
+    dispatch(createBricks(gridLength));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleButtonOnClick(index: number) {
-    console.log(index);
+  function handleButtonOnClick(idx: number) {
+    dispatch(insertBrickOnBoard(idx));
   }
 
   function greedStyle(i: number) {
-    const x = i % GRID_LENGTH;
-    const y = Math.floor(i / GRID_LENGTH);
+    const x = i % gridLength;
+    const y = Math.floor(i / gridLength);
     if (
       (Math.floor(x / 3) % 2 && !(Math.floor(y / 3) % 2))
       || (!(Math.floor(x / 3) % 2) && Math.floor(y / 3) % 2)
@@ -37,15 +47,15 @@ export default function BoardGame() {
 
   return (
     <Grid container className={classes.root}>
-      {array.map((el, i) => (
+      {bricks.map((el, idx) => (
         <Grid
           key={el.id}
           item
-          className={clsx(classes.grid, greedStyle(i))}
+          className={clsx(classes.grid, greedStyle(idx))}
         >
           <Button
-            onClick={() => handleButtonOnClick(el.id)}
-            className={clsx(classes.button)}
+            onClick={() => handleButtonOnClick(idx)}
+            className={clsx(classes.button, el.state === BrickStyles.fill && classes.brickFull)}
           >
             {null}
           </Button>

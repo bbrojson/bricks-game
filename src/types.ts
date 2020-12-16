@@ -1,8 +1,8 @@
-export enum BrickState {
+export enum BrickStyles {
   empty,
   fill,
 }
 export type Brick = {
   id: number,
-  state: BrickState,
+  state: BrickStyles,
 };

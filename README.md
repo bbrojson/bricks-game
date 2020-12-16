@@ -1,10 +1,7 @@
 # Bricks game
 Tetris bricks puzzle.
 
-[![APP_NAME](docs/screen.png)](https://APP_URL.netlify.app/)
-
-[Live demo![Netlify Status](NETLIFY_BADGE)](https://APP_URL.netlify.app/)
-
+[![APP_NAME](docs/screenshot.png)]
 
 # Stack:
 - TypeScript

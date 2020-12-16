@@ -18,7 +18,7 @@ export default function GameView() {
         <Grid container spacing={0}>
           <Grid item xs={12}>
             <Box p={3} pr={0} pl={0}>
-              <BoardGame />
+              <BoardGame gridLength={9} />
             </Box>
           </Grid>
         </Grid>

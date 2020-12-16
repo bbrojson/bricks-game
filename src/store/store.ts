@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/prefer-default-export */
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import bricksReducer from './bricksSlice';
 
 const store = configureStore({
@@ -10,5 +10,5 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-// export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
+export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
 export default store;

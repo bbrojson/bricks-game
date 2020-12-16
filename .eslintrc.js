@@ -21,6 +21,8 @@ module.exports = {
     "@typescript-eslint/no-shadow": 1,
 
     "@typescript-eslint/explicit-module-boundary-types": 0,
+    "react/prop-types": "off", // Since we do not use prop-types
+    "react/require-default-props": "off" // Since we do not use prop-types
 
     // "react/require-default-props": [2, { ignoreFunctionalComponents: true }],
     

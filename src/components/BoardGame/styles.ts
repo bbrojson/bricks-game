@@ -33,10 +33,16 @@ export const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => create
   brickEmpty: {
     backgroundColor: '#321001',
     border: '1px solid #000',
+    hover: {
+      backgroundColor: '#321001',
+    },
   },
   brickEmptyLighter: {
     backgroundColor: '#461d0a',
     border: '1px solid #000',
+    hover: {
+      backgroundColor: '#461d0a',
+    },
   },
   brickFull: {
     backgroundColor: '#efe3dc',
@@ -45,6 +51,9 @@ export const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => create
     borderWidth: '2px',
     borderStyle: 'outset',
     transform: 'matrix(1, 0, 0, 1, 0, 0)',
+    hover: {
+      backgroundColor: '#efe3dc',
+    },
   },
   brickInLine: {
     backgroundColor: '#fffcfa',
@@ -53,5 +62,8 @@ export const useStyles = makeStyles<Theme, StylesProps>((theme: Theme) => create
     borderWidth: '2px',
     borderStyle: 'outset',
     transform: 'matrix(1, 0, 0, 1, 0, 0)',
+    hover: {
+      backgroundColor: '#fffcfa',
+    },
   },
 }));
